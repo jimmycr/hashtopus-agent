@@ -731,6 +731,7 @@ namespace hashtopus
                         {
                             // list all subkeys (e.g. graphic cards entries 0000, 0001 and so on)
                             foreach (string grafika in klic.GetSubKeyNames())
+                            try 
                             {
                                 bool valueExists = false;
                                 RegistryKey klicGpu = null;
@@ -757,7 +758,7 @@ namespace hashtopus
                                 {
                                     valueExists = true;
                                 }
-
+    
                                 if (valueExists == true)
                                 {
                                     // the value was found somewhere so in klicGpu we now have
@@ -775,6 +776,13 @@ namespace hashtopus
                                         if (justFound > greatestFound) greatestFound = justFound;
                                     }
                                 }
+                            }
+                            catch 
+                            {
+                                    // do nothing - this is fast fix for error:
+                                        //Unhandled Exception: System.NullReferenceException: Object reference not set to an object instance.
+                                        //at hashtopus.hashtopus.versionDetect ()
+                                        //at hashtopus.hashtopus.Main (String [] args)
                             }
                         }
                         if (greatestFound == 0)
